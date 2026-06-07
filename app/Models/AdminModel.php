@@ -120,7 +120,7 @@ class AdminModel extends Database {
             $stmt = $this->conn->prepare("UPDATE tbl_orders SET ostatus='YES' WHERE u_id=:ids AND ostatus='NO'");
             $stmt->bindparam(":ids", $user_id);
             $stmt->execute();
-            return $stmt->rowCount();
+            return true;
         } catch (PDOException $e) {
             error_log($e->getMessage());
             return false;
