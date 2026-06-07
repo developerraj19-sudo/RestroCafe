@@ -88,8 +88,9 @@ class CartController extends BaseController {
         $stmt = $conn->prepare("SELECT u_id FROM tbl_user WHERE u_id = :uid");
         $stmt->bindParam(":uid", $_SESSION['user_id']);
         $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($stmt->rowCount() == 0) {
+        if (!$user) {
             echo json_encode(['status' => 'cleared']);
             exit;
         }

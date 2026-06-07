@@ -251,12 +251,12 @@ class AdminController extends BaseController {
             $this->redirect('/admin/dashboard');
         }
 
-        $countraw = $this->adminModel->billlistbyuid($ids);
-        if (!$countraw) {
+        $rows = $this->adminModel->billlistbyuid($ids);
+        if (!$rows || count($rows) == 0) {
             $this->redirect('/admin/dashboard');
         }
 
-        $count = $countraw->rowCount();
+        $count = count($rows);
 
         if($count < 12){
             $pht = 150;
@@ -268,8 +268,7 @@ class AdminController extends BaseController {
         $pdf->SetAutoPagebreak(false);
         $pdf->SetMargins(0,0,0);
 
-        $billhead = $this->adminModel->billlistbyuid($ids);
-        $firstrow = $billhead->fetch(PDO::FETCH_ASSOC);
+        $firstrow = $rows[0];
         $f = 100;
         $tottaxval = 0;
         $totqty = 0;
@@ -309,8 +308,7 @@ class AdminController extends BaseController {
         $y = 51;
         $r = 1;
 
-        $listofitem = $this->adminModel->billlistbyuid($ids);
-        while ($data = $listofitem->fetch(PDO::FETCH_ASSOC))
+        foreach ($rows as $data)
         {
             $pdf->SetXY( 5, $y ); $pdf->SetFont( "Arial", "", 7 ); $pdf->Cell( 45, 8, $r.' '.$data['item_name'], 0, 0, 'L');
             $pdf->SetXY( 52, $y ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 10, 8, $data['o_qty'], 0, 0, 'C');
