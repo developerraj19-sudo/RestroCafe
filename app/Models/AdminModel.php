@@ -155,17 +155,13 @@ class AdminModel extends Database {
             $stmnt=$this->conn->prepare("SELECT * from tbl_emp where username=:usrname");
             $stmnt->bindParam(":usrname", $name, PDO::PARAM_STR);
             $stmnt->execute();
-            if ($stmnt->rowCount() > 0) {
-                while ($hash=$stmnt->fetch(PDO::FETCH_ASSOC)) {
-                    if (password_verify($pwd, $hash['password'])) {
-                        return $hash['staff_id'];
-                    } else {
-                        return false;
-                    }
+            $hash = $stmnt->fetch(PDO::FETCH_ASSOC);
+            if ($hash) {
+                if (password_verify($pwd, $hash['password'])) {
+                    return $hash['staff_id'];
                 }
-            } else {
-                return false;
             }
+            return false;
         } catch (PDOException $e) {
             error_log($e->getMessage());
             return false;
