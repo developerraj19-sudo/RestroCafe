@@ -75,7 +75,7 @@ class AdminModel extends Database {
 
     public function getitemlist() {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM tbl_items WHERE 1");
+            $stmt = $this->conn->prepare("SELECT * FROM tbl_items WHERE 1=1");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -237,7 +237,7 @@ class AdminModel extends Database {
 
     public function viewallitems() {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM tbl_items WHERE 1");
+            $stmt = $this->conn->prepare("SELECT * FROM tbl_items WHERE 1=1");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {
