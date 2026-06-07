@@ -10,6 +10,15 @@ class HomeController extends BaseController {
         $admin = new AdminModel();
         $items = $admin->getitemlist();
         
+        if (isset($_GET['debug'])) {
+            echo "<h1>DEBUG INFO</h1>";
+            echo "<pre>";
+            echo "Items count: " . count($items) . "\n";
+            print_r($items);
+            echo "</pre>";
+            exit;
+        }
+        
         $this->render('pages/home', ['items' => $items]);
     }
 }
