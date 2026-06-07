@@ -264,96 +264,103 @@ class AdminController extends BaseController {
             $ct = $count-12;
             $pht = 150+($ct*3.3);
         }
-        $pdf = new FPDF( 'P', 'mm',array(100,$pht) );
-        $pdf->SetAutoPagebreak(false);
-        $pdf->SetMargins(0,0,0);
+        try {
+            $pdf = new FPDF( 'P', 'mm',array(100,$pht) );
+            $pdf->SetAutoPagebreak(false);
+            $pdf->SetMargins(0,0,0);
 
-        $firstrow = $rows[0];
-        $f = 100;
-        $tottaxval = 0;
-        $totqty = 0;
-        $totgrand = 0;
+            $firstrow = $rows[0];
+            $f = 100;
+            $tottaxval = 0;
+            $totqty = 0;
+            $totgrand = 0;
 
-        $pdf->AddPage();
-        
-        // Add Application Logo
-        if (file_exists(ROOT_DIR . DS . 'public' . DS . 'img' . DS . 'logo.png')) {
-            $pdf->Image(ROOT_DIR . DS . 'public' . DS . 'img' . DS . 'logo.png', 35, 2, 30);
-        }
-
-        $pdf->SetXY( 1, 20 ); $pdf->SetFont('Arial','B',18);
-        $pdf->Cell( $pdf->GetPageWidth(), 5,'RestroCafe', 0, 0, 'C');
-
-        $pdf->SetXY( 1, 26 ); $pdf->SetFont('Arial','',10);
-        $pdf->Cell( $pdf->GetPageWidth(), 5, 'Mangalore Hampankatta', 0, 0, 'C');
-
-        $pdf->SetXY( 1, 30 ); $pdf->SetFont('Arial','',10);
-        $pdf->Cell( $pdf->GetPageWidth(), 5, 'Karnataka, India', 0, 0, 'C');
-
-        $pdf->SetXY( 1, 36 ); $pdf->SetFont('Arial','BU',10);
-        $pdf->Cell( $pdf->GetPageWidth(), 5, " RECEIPT ", 0, 0, 'C');
-
-        $pdf->SetXY( 5, 42 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 160, 8, 'To :  '.$firstrow['user_name'], 0, 0, 'L');
-
-        $pdf->SetXY( 60, 42 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 15, 8, 'Table. No : ', 0, 0, 'L');
-        $pdf->SetXY( 80, 42 ); $pdf->SetFont( "Arial", "B", 14 ); $pdf->Cell( 15, 8, '#'.$firstrow['table_no'], 0, 0, 'R');
-
-        $pdf->SetXY( 60, 47 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 15, 8, 'DATE   : ', 0, 0, 'L');
-        $pdf->SetXY( 78, 47 ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 20, 8, $firstrow['dateandtime'], 0, 0, 'R');
-
-        $pdf->SetLineWidth(0.5); $pdf->Line(5, 55.5, 97, 55.5);
-        
-        $pdf->SetXY( 5, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 45, 8, 'ITEM NAME', 0, 0, 'L');
-        $pdf->SetXY( 52, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 10, 8, 'QTY', 0, 0, 'C');
-        $pdf->SetXY( 65, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 12, 8, 'MRP', 0, 0, 'R');
-        $pdf->SetXY( 80, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 15, 8, 'TOTAL', 0, 0, 'R');
-
-        $pdf->SetLineWidth(0.5); $pdf->Line(5, 61, 97, 61);
-
-        $y = 61;
-        $r = 1;
-
-        foreach ($rows as $data)
-        {
-            $pdf->SetXY( 5, $y ); $pdf->SetFont( "Arial", "", 7 ); $pdf->Cell( 45, 8, $r.' '.$data['item_name'], 0, 0, 'L');
-            $pdf->SetXY( 52, $y ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 10, 8, $data['o_qty'], 0, 0, 'C');
-            $pdf->SetXY( 65, $y ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 12, 8, number_format($data['price'],2), 0, 0, 'R');
-            $tot = str_replace(",", "", number_format($data['o_qty']*$data['price'],2));
-            $pdf->SetXY( 80, $y ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 15, 8, $tot, 0, 0, 'R');
+            $pdf->AddPage();
             
-            $totqty += $data['o_qty'];
-            $totgrand += $tot;
+            // Add Application Logo
+            if (file_exists(ROOT_DIR . DS . 'public' . DS . 'img' . DS . 'logo.png')) {
+                $pdf->Image(ROOT_DIR . DS . 'public' . DS . 'img' . DS . 'logo.png', 35, 2, 30);
+            }
 
-            $y += 4;
-            $r++;
-        }
-        
-        $pdf->SetLineWidth(0); $pdf->SetDrawColor(80,69,69); $pdf->Line(5, $y+3, 97, $y+3);
+            $pdf->SetXY( 1, 20 ); $pdf->SetFont('Arial','B',18);
+            $pdf->Cell( $pdf->GetPageWidth(), 5,'RestroCafe', 0, 0, 'C');
 
-        $pdf->SetXY( 52, $y+2 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 10, 8, 'Items: '.$totqty, 0, 0, 'C');
+            $pdf->SetXY( 1, 26 ); $pdf->SetFont('Arial','',10);
+            $pdf->Cell( $pdf->GetPageWidth(), 5, 'Mangalore Hampankatta', 0, 0, 'C');
+
+            $pdf->SetXY( 1, 30 ); $pdf->SetFont('Arial','',10);
+            $pdf->Cell( $pdf->GetPageWidth(), 5, 'Karnataka, India', 0, 0, 'C');
+
+            $pdf->SetXY( 1, 36 ); $pdf->SetFont('Arial','BU',10);
+            $pdf->Cell( $pdf->GetPageWidth(), 5, " RECEIPT ", 0, 0, 'C');
+
+            $pdf->SetXY( 5, 42 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 160, 8, 'To :  '.$firstrow['user_name'], 0, 0, 'L');
+
+            $pdf->SetXY( 60, 42 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 15, 8, 'Table. No : ', 0, 0, 'L');
+            $pdf->SetXY( 80, 42 ); $pdf->SetFont( "Arial", "B", 14 ); $pdf->Cell( 15, 8, '#'.$firstrow['table_no'], 0, 0, 'R');
+
+            $pdf->SetXY( 60, 47 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 15, 8, 'DATE   : ', 0, 0, 'L');
+            $pdf->SetXY( 78, 47 ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 20, 8, $firstrow['dateandtime'], 0, 0, 'R');
+
+            $pdf->SetLineWidth(0.5); $pdf->Line(5, 55.5, 97, 55.5);
+            
+            $pdf->SetXY( 5, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 45, 8, 'ITEM NAME', 0, 0, 'L');
+            $pdf->SetXY( 52, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 10, 8, 'QTY', 0, 0, 'C');
+            $pdf->SetXY( 65, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 12, 8, 'MRP', 0, 0, 'R');
+            $pdf->SetXY( 80, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 15, 8, 'TOTAL', 0, 0, 'R');
+
+            $pdf->SetLineWidth(0.5); $pdf->Line(5, 61, 97, 61);
+
+            $y = 61;
+            $r = 1;
+
+            foreach ($rows as $data)
+            {
+                $pdf->SetXY( 5, $y ); $pdf->SetFont( "Arial", "", 7 ); $pdf->Cell( 45, 8, $r.' '.$data['item_name'], 0, 0, 'L');
+                $pdf->SetXY( 52, $y ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 10, 8, $data['o_qty'], 0, 0, 'C');
+                $pdf->SetXY( 65, $y ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 12, 8, number_format($data['price'],2), 0, 0, 'R');
+                $tot = str_replace(",", "", number_format($data['o_qty']*$data['price'],2));
+                $pdf->SetXY( 80, $y ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 15, 8, $tot, 0, 0, 'R');
+                
+                $totqty += $data['o_qty'];
+                $totgrand += $tot;
+
+                $y += 4;
+                $r++;
+            }
+            
+            $pdf->SetLineWidth(0); $pdf->SetDrawColor(80,69,69); $pdf->Line(5, $y+3, 97, $y+3);
+
+            $pdf->SetXY( 52, $y+2 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 10, 8, 'Items: '.$totqty, 0, 0, 'C');
+            
+            $pdf->SetXY( 80, $y+2 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 15, 8, number_format($totgrand,2), 0, 0, 'R');
+            
+            $y +=10;
+            
+            if($y < 100){
+                $f =100;
+            }else{
+                $f = $y;
+            }
+            $inwords  = $this->getIndianCurrency($totgrand).' Only';
+            $pdf->SetLineWidth(0.5); $pdf->Line(5, $f+3, 97, $f+3);
+            $pdf->SetXY( 0, $f+5 ); $pdf->SetFont('Arial','',14);
+            $pdf->Cell( $pdf->GetPageWidth(), 10, "TOTAL : ".number_format($totgrand,2), 0, 0, 'C');
+            $pdf->SetXY( 0, $f+12 ); $pdf->SetFont('Arial','B',8);
+            $pdf->Cell( $pdf->GetPageWidth(), 5, "Rs. ".$inwords, 0, 0, 'C');
+            
+            $pdf->SetXY( 0, $f+19 ); $pdf->SetFont('Arial','B',9);
+            $pdf->Cell( $pdf->GetPageWidth(), 10, "THANK YOU, VISIT AGAIN.", 0, 0, 'C');
         
-        $pdf->SetXY( 80, $y+2 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 15, 8, number_format($totgrand,2), 0, 0, 'R');
-        
-        $y +=10;
-        
-        if($y < 100){
-            $f =100;
-        }else{
-            $f = $y;
+            $nom_file = "bill_" .'-' . str_pad('1091', 2, '0', STR_PAD_LEFT) . ".pdf";
+            $pdf->Output("I", $nom_file);
+            exit;
+        } catch (Exception $e) {
+            echo "<h1>FPDF Crash Debug Info</h1>";
+            echo "<p><strong>Error Message:</strong> " . $e->getMessage() . "</p>";
+            echo "<p>If the error mentions PNG or Alpha channels, the logo.png file format is incompatible with the FPDF library.</p>";
+            exit;
         }
-        $inwords  = $this->getIndianCurrency($totgrand).' Only';
-        $pdf->SetLineWidth(0.5); $pdf->Line(5, $f+3, 97, $f+3);
-        $pdf->SetXY( 0, $f+5 ); $pdf->SetFont('Arial','',14);
-        $pdf->Cell( $pdf->GetPageWidth(), 10, "TOTAL : ".number_format($totgrand,2), 0, 0, 'C');
-        $pdf->SetXY( 0, $f+12 ); $pdf->SetFont('Arial','B',8);
-        $pdf->Cell( $pdf->GetPageWidth(), 5, "Rs. ".$inwords, 0, 0, 'C');
-        
-        $pdf->SetXY( 0, $f+19 ); $pdf->SetFont('Arial','B',9);
-        $pdf->Cell( $pdf->GetPageWidth(), 10, "THANK YOU, VISIT AGAIN.", 0, 0, 'C');
-    
-        $nom_file = "bill_" .'-' . str_pad('1091', 2, '0', STR_PAD_LEFT) . ".pdf";
-        $pdf->Output("I", $nom_file);
-        exit;
     }
 
     private function getIndianCurrency($number) {
