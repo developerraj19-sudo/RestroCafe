@@ -195,3 +195,38 @@ CREATE TABLE vehmast (
 -- Default admin staff login (password hash is for: admin123).
 INSERT INTO tbl_emp (username, password)
 VALUES ('admin', '$2y$10$3/A.8M0d7dC5.rO.0Q5XG.r/5aP/M6V5hP2S.Q7uTz5mB6bK7QJ.a');
+-- =============================================================
+-- RestroCafe - Seed Data for Menu Items
+-- Copy and paste this entirely into the Supabase SQL Editor
+-- =============================================================
+
+INSERT INTO tbl_items (item_id, item_name, item_desc, categories, veg, price, image) VALUES 
+('item_101', 'Butter Chicken', 'Creamy and rich tomato-based chicken curry', 'Main Course', 'NO', 350.00, 'butter_chicken.png'),
+('item_102', 'Butter Roti', 'Tandoori wheat flatbread brushed with butter', 'Breads', 'YES', 25.00, 'butter_roti.png'),
+('item_103', 'Chicken Tikka', 'Spiced chicken chunks roasted in tandoor', 'Starters', 'NO', 250.00, 'chicken_tikka.png'),
+('item_104', 'Chicken Wings', 'Crispy fried chicken wings with spicy sauce', 'Starters', 'NO', 220.00, 'chicken_wings.png'),
+('item_105', 'Cold Coffee', 'Refreshing blended iced coffee', 'Beverages', 'YES', 120.00, 'cold_coffee.png'),
+('item_106', 'Crispy Corn', 'Fried sweet corn kernels tossed in spices', 'Starters', 'YES', 150.00, 'crispy_corn.png'),
+('item_107', 'Dal Makhani', 'Slow-cooked black lentils in creamy butter sauce', 'Main Course', 'YES', 220.00, 'dal_makhani.png'),
+('item_108', 'Fish Amritsari', 'Crispy spiced battered fish fry', 'Starters', 'NO', 320.00, 'fish_amritsari.png'),
+('item_109', 'Fresh Lime Soda', 'Sweet and salty refreshing lemon soda', 'Beverages', 'YES', 80.00, 'Fresh Lime Soda.jpg'),
+('item_110', 'Garlic Naan', 'Soft flatbread topped with garlic and butter', 'Breads', 'YES', 60.00, 'garlic_naan.png'),
+('item_111', 'Gulab Jamun', 'Sweet milk-solid balls soaked in sugar syrup', 'Desserts', 'YES', 90.00, 'gulab_jamun.png'),
+('item_112', 'Hara Bhara Kebab', 'Healthy spinach, peas, and potato patties', 'Starters', 'YES', 180.00, 'hara_bhara_kebab.png'),
+('item_113', 'Kulfi Falooda', 'Traditional Indian ice cream dessert', 'Desserts', 'YES', 140.00, 'kulfi_falooda.png'),
+('item_114', 'Mango Lassi', 'Sweet yogurt drink blended with fresh mango', 'Beverages', 'YES', 110.00, 'mango-lassi-drink.png'),
+('item_115', 'Masala Chai', 'Indian spiced milk tea', 'Beverages', 'YES', 40.00, 'Masala Chai.png'),
+('item_116', 'Mixed Pickle', 'Spicy assorted Indian pickle', 'Sides', 'YES', 30.00, 'Mixed Pickle.png'),
+('item_117', 'Mutton Biryani', 'Aromatic basmati rice cooked with spiced mutton', 'Main Course', 'NO', 450.00, 'mutton_biryani.png'),
+('item_118', 'Palak Paneer', 'Cottage cheese cubes in a creamy spinach gravy', 'Main Course', 'YES', 260.00, 'palak_paneer.png'),
+('item_119', 'Paneer Butter Masala', 'Cottage cheese in rich buttery tomato gravy', 'Main Course', 'YES', 280.00, 'paneer_butter_masala.png'),
+('item_120', 'Paneer Tikka', 'Grilled marinated cottage cheese chunks', 'Starters', 'YES', 220.00, 'paneer_tikka.png'),
+('item_121', 'Papad Platter', 'Assortment of roasted and fried papads', 'Sides', 'YES', 70.00, 'Papad Platter.png'),
+('item_122', 'Raita', 'Cooling yogurt dip with spices', 'Sides', 'YES', 60.00, 'Raita.png'),
+('item_123', 'Rasgulla', 'Spongy cottage cheese balls in sugar syrup', 'Desserts', 'YES', 100.00, 'rasgulla.png'),
+('item_124', 'Seekh Kebab', 'Minced meat skewers cooked in tandoor', 'Starters', 'NO', 300.00, 'seekh_kebab.png'),
+('item_125', 'Shahi Paneer', 'Royal cottage cheese curry in cashew gravy', 'Main Course', 'YES', 290.00, 'shahi_paneer.png'),
+('item_126', 'Stuffed Paratha', 'Whole wheat flatbread stuffed with spiced potatoes', 'Breads', 'YES', 80.00, 'stuffed_paratha.png'),
+('item_127', 'Veg Biryani', 'Aromatic spiced rice mixed with vegetables', 'Main Course', 'YES', 240.00, 'veg_biryani.png'),
+('item_128', 'Veg Spring Rolls', 'Crispy fried rolls stuffed with vegetables', 'Starters', 'YES', 160.00, 'veg_spring_rolls.png'),
+('item_129', 'Virgin Mojito', 'Mint and lime mocktail', 'Beverages', 'YES', 130.00, 'Virgin Mojito.png');
