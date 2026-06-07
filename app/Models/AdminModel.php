@@ -79,6 +79,7 @@ class AdminModel extends Database {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+            echo "AdminModel PDO Error: " . $e->getMessage() . "<br>";
             error_log($e->getMessage());
             return [];
         }
