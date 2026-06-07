@@ -384,4 +384,14 @@ class AdminController extends BaseController {
         $paise = ($decimal) ? "." . ($words[$decimal / 10] . " " . $words[$decimal % 10]) . ' Paise' : '';
         return ($Rupees ? $Rupees . 'Rupees ' : '') . $paise;
     }
+
+    public function forceUnlock() {
+        $this->requireLogin();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['table_no'])) {
+            $table_no = $_POST['table_no'];
+            $this->adminModel->forceUnlockTable($table_no);
+            $_SESSION['success_message'] = "Table $table_no forcefully unlocked!";
+        }
+        $this->redirect('/admin/dashboard');
+    }
 }

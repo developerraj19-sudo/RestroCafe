@@ -8,8 +8,8 @@ class AdminModel extends Database {
             $stmt->bindparam(":uname", $username);
             $stmt->bindparam(":ids", $tableno);
             $stmt->execute();
-            if ($stmt->rowCount() > 0) {
-                $res = $stmt->fetch(PDO::FETCH_ASSOC);
+            $res = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($res) {
                 return ['user_id' => $res['u_id'], 'table' => $tableno];
             }
             return false;
@@ -42,8 +42,8 @@ class AdminModel extends Database {
             $stmt = $this->conn->prepare("SELECT u_id, user_name FROM tbl_user WHERE table_no=:ids ORDER BY ID DESC LIMIT 1");
             $stmt->bindparam(":ids", $tableno);
             $stmt->execute();
-            if ($stmt->rowCount() > 0) {
-                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($user) {
                 $uid = $user['u_id'];
                 $uname = $user['user_name'];
                 
@@ -51,11 +51,12 @@ class AdminModel extends Database {
                 $orderStmt->bindparam(":uid", $uid);
                 $orderStmt->execute();
                 
-                if ($orderStmt->rowCount() == 0) {
+                $orders = $orderStmt->fetchAll(PDO::FETCH_ASSOC);
+                if (count($orders) == 0) {
                     return $uname;
                 } else {
                     $activeOrders = false;
-                    while ($order = $orderStmt->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($orders as $order) {
                         if ($order['ostatus'] !== 'ARCHIVED') {
                             $activeOrders = true;
                             break;
@@ -356,8 +357,9 @@ class AdminModel extends Database {
             $stmt = $this->conn->prepare("SELECT u_id FROM tbl_user WHERE table_no=:ids");
             $stmt->bindParam(":ids", $tableno);
             $stmt->execute();
-            if($stmt->rowCount() > 0) {
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(count($rows) > 0) {
+                foreach ($rows as $row) {
                     $uid = $row['u_id'];
                     
                     $dummyId = md5(uniqid());
