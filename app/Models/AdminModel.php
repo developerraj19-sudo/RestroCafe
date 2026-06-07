@@ -186,7 +186,7 @@ class AdminModel extends Database {
 
     public function orderlist() {
         try {
-            $stmt = $this->conn->prepare("SELECT tu.table_no,SUM(tto.o_qty*ti.price) as tot,tu.u_id FROM tbl_orders tto INNER JOIN tbl_user tu ON tto.u_id = tu.u_id INNER JOIN tbl_items ti ON ti.item_id = tto.item_id WHERE tto.ostatus = 'YES' GROUP BY tto.u_id , tu.table_no");
+            $stmt = $this->conn->prepare("SELECT tu.table_no,SUM(tto.o_qty*ti.price) as tot,tu.u_id FROM tbl_orders tto INNER JOIN tbl_user tu ON tto.u_id = tu.u_id INNER JOIN tbl_items ti ON ti.item_id = tto.item_id WHERE tto.ostatus = 'YES' GROUP BY tu.u_id , tu.table_no");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {
@@ -208,7 +208,7 @@ class AdminModel extends Database {
 
     public function billlist() {
         try {
-            $stmt = $this->conn->prepare("SELECT tu.table_no,SUM(tto.o_qty*ti.price)as tot,tu.u_id  FROM tbl_orders tto INNER JOIN tbl_user tu ON tto.u_id = tu.u_id INNER JOIN tbl_items ti ON ti.item_id = tto.item_id WHERE tto.ostatus = 'CLOSED' GROUP BY tto.u_id ,tu.table_no ");
+            $stmt = $this->conn->prepare("SELECT tu.table_no,SUM(tto.o_qty*ti.price)as tot,tu.u_id  FROM tbl_orders tto INNER JOIN tbl_user tu ON tto.u_id = tu.u_id INNER JOIN tbl_items ti ON ti.item_id = tto.item_id WHERE tto.ostatus = 'CLOSED' GROUP BY tu.u_id ,tu.table_no ");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {
