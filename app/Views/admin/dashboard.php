@@ -82,6 +82,37 @@
 
       <h2 class="dashboard-header text-center">Live Restaurant Dashboard</h2>
 
+      <!-- Live Table Status -->
+      <div class="row mb-2">
+        <div class="col-12">
+            <h5 class="admin-card-title mb-3" style="color: var(--accent-color); font-family: 'Playfair Display', serif;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-grid-3x3-gap-fill mr-2 pb-1" viewBox="0 0 16 16">
+                  <path d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+                </svg> Live Table Status
+            </h5>
+            <div class="row">
+                <?php for($i=1; $i<=20; $i++): ?>
+                    <?php 
+                        $isOccupied = isset($occupiedTables[$i]);
+                        $customerName = $isOccupied ? $occupiedTables[$i] : 'Available';
+                        $bgStyle = $isOccupied ? 'background: rgba(220, 167, 102, 0.15); border: 1px solid var(--accent-color);' : 'background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);';
+                        $textStyle = $isOccupied ? 'color: var(--accent-color); font-weight: 600;' : 'color: rgba(255,255,255,0.3);';
+                    ?>
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+                        <div class="card text-center" style="<?php echo $bgStyle; ?> border-radius: 8px; transition: all 0.3s; height: 100%;">
+                            <div class="card-body p-2">
+                                <h6 class="mb-1" style="<?php echo $textStyle; ?> font-family: 'Playfair Display', serif; font-size: 1.1rem;">T-<?php echo $i; ?></h6>
+                                <div style="font-size: 0.8rem; <?php echo $isOccupied ? 'color: #fff;' : 'color: rgba(255,255,255,0.2);'; ?> white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?php echo htmlspecialchars($customerName); ?>">
+                                    <?php echo htmlspecialchars($customerName); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endfor; ?>
+            </div>
+        </div>
+      </div>
+
       <div class="row">     
         <!-- Pending Bill list -->
         <div class="col-md-4 mb-4">

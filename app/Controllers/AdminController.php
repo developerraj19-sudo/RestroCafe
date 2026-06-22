@@ -68,6 +68,7 @@ class AdminController extends BaseController {
     public function dashboard() {
         $this->requireLogin();
         $data = [
+            'occupiedTables' => $this->adminModel->getOccupiedTables(),
             'finishlist' => $this->adminModel->finishlist(),
             'orderlist' => $this->adminModel->orderlist(),
             'billlist' => $this->adminModel->billlist()
