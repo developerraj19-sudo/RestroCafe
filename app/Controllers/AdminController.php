@@ -255,6 +255,23 @@ class AdminController extends BaseController {
         $this->redirect('/admin/dashboard');
     }
 
+    public function forceUnlock() {
+        $this->requireLogin();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $table = (int)($_POST['table_no'] ?? 0);
+            if ($table >= 1 && $table <= 20) {
+                if ($this->adminModel->forceUnlockTable($table)) {
+                    $_SESSION['success_message'] = "Table $table forcefully unlocked successfully.";
+                } else {
+                    $_SESSION['error_message'] = "Failed to forcefully unlock Table $table.";
+                }
+            } else {
+                $_SESSION['error_message'] = "Invalid Table Number.";
+            }
+        }
+        $this->redirect('/admin/dashboard');
+    }
+
     public function bill() {
         $this->requireLogin();
         require_once ROOT_DIR . DS . 'libs' . DS . 'fpdf.php';
