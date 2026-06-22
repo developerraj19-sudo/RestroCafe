@@ -224,7 +224,7 @@ class AdminModel extends Database {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch(PDOException $e) {
-            error_log($e->getMessage());
+            die("DATABASE ERROR: " . $e->getMessage());
             return [];
         }
     }
