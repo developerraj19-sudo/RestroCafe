@@ -15,6 +15,9 @@
             <li class="nav-item">
                 <a class="nav-link text-light font-weight-bold" style="color: var(--accent-color) !important;" href="<?php echo BASE_URL; ?>/admin/kitchen">Kitchen View</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-light font-weight-bold" href="<?php echo BASE_URL; ?>/admin/history">Order History</a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-light" href="#" id="itemsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Manage Items

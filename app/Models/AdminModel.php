@@ -217,6 +217,18 @@ class AdminModel extends Database {
         }
     }
 
+    public function getHistory($limit = 100) {
+        try {
+            $stmt = $this->conn->prepare("SELECT tu.table_no, tu.user_name, SUM(tto.o_qty*ti.price) as tot, MAX(tto.dateandtime) as dateandtime, tu.u_id FROM tbl_orders tto INNER JOIN tbl_user tu ON tto.u_id = tu.u_id INNER JOIN tbl_items ti ON ti.item_id = tto.item_id WHERE tto.ostatus = 'CLOSED' GROUP BY tu.u_id, tu.table_no, tu.user_name ORDER BY dateandtime DESC LIMIT :limit");
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            error_log($e->getMessage());
+            return [];
+        }
+    }
+
     public function insertitems($name, $desc, $cat, $ivn, $price, $imgData) {
         try {
             $itemid = md5(uniqid().mt_rand());

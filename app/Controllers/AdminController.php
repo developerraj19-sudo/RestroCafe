@@ -75,6 +75,18 @@ class AdminController extends BaseController {
         $this->adminRender('dashboard', $data);
     }
 
+    public function history() {
+        $this->requireLogin();
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 100;
+        if ($limit <= 0) $limit = 100;
+        
+        $data = [
+            'historylist' => $this->adminModel->getHistory($limit),
+            'limit' => $limit
+        ];
+        $this->adminRender('history', $data);
+    }
+
     public function kitchen() {
         $this->requireLogin();
         $rawOrders = $this->adminModel->kitchenOrders();
