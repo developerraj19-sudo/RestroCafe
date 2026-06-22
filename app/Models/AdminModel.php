@@ -287,7 +287,7 @@ class AdminModel extends Database {
 
     public function billlistbyuid($ids) {
         try {
-            $stmt = $this->conn->prepare("SELECT tu.table_no,ti.item_name,SUM(tto.o_qty) as o_qty,ti.price,tu.u_id,tu.user_name,tto.dateandtime,tto.notes FROM tbl_orders tto INNER JOIN tbl_user tu ON tto.u_id = tu.u_id INNER JOIN tbl_items ti ON ti.item_id = tto.item_id WHERE tto.ostatus = 'CLOSED' AND tto.u_id=:ids GROUP BY ti.item_name, ti.price, tu.table_no, tu.u_id, tu.user_name, tto.dateandtime, tto.notes");
+            $stmt = $this->conn->prepare("SELECT tu.table_no,ti.item_name,SUM(tto.o_qty) as o_qty,ti.price,tu.u_id,tu.user_name,tto.dateandtime,tto.notes FROM tbl_orders tto INNER JOIN tbl_user tu ON tto.u_id = tu.u_id INNER JOIN tbl_items ti ON ti.item_id = tto.item_id WHERE tto.ostatus IN ('CLOSED', 'ARCHIVED') AND tto.u_id=:ids GROUP BY ti.item_name, ti.price, tu.table_no, tu.u_id, tu.user_name, tto.dateandtime, tto.notes");
             $stmt->bindparam(":ids", $ids);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

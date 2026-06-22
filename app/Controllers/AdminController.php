@@ -309,39 +309,37 @@ class AdminController extends BaseController {
             
             // Add Application Logo
             if (file_exists(ROOT_DIR . DS . 'public' . DS . 'img' . DS . 'logo.png')) {
-                $pdf->Image(ROOT_DIR . DS . 'public' . DS . 'img' . DS . 'logo.png', 35, 2, 30);
+                // Resize to 24 width to fit nicely above the address
+                $pdf->Image(ROOT_DIR . DS . 'public' . DS . 'img' . DS . 'logo.png', 38, 2, 24);
             }
 
-            $pdf->SetXY( 1, 20 ); $pdf->SetFont('Arial','B',18);
-            $pdf->Cell( $pdf->GetPageWidth(), 5,'RestroCafe', 0, 0, 'C');
-
-            $pdf->SetXY( 1, 26 ); $pdf->SetFont('Arial','',10);
+            $pdf->SetXY( 1, 28 ); $pdf->SetFont('Arial','',10);
             $pdf->Cell( $pdf->GetPageWidth(), 5, 'Mangalore Hampankatta', 0, 0, 'C');
 
-            $pdf->SetXY( 1, 30 ); $pdf->SetFont('Arial','',10);
+            $pdf->SetXY( 1, 32 ); $pdf->SetFont('Arial','',10);
             $pdf->Cell( $pdf->GetPageWidth(), 5, 'Karnataka, India', 0, 0, 'C');
 
-            $pdf->SetXY( 1, 36 ); $pdf->SetFont('Arial','BU',10);
+            $pdf->SetXY( 1, 38 ); $pdf->SetFont('Arial','BU',10);
             $pdf->Cell( $pdf->GetPageWidth(), 5, " RECEIPT ", 0, 0, 'C');
 
-            $pdf->SetXY( 5, 42 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 160, 8, 'To :  '.$firstrow['user_name'], 0, 0, 'L');
+            $pdf->SetXY( 5, 44 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 160, 8, 'To :  '.$firstrow['user_name'], 0, 0, 'L');
 
-            $pdf->SetXY( 60, 42 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 15, 8, 'Table. No : ', 0, 0, 'L');
-            $pdf->SetXY( 80, 42 ); $pdf->SetFont( "Arial", "B", 14 ); $pdf->Cell( 15, 8, '#'.$firstrow['table_no'], 0, 0, 'R');
+            $pdf->SetXY( 60, 44 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 15, 8, 'Table. No : ', 0, 0, 'L');
+            $pdf->SetXY( 80, 44 ); $pdf->SetFont( "Arial", "B", 14 ); $pdf->Cell( 15, 8, '#'.$firstrow['table_no'], 0, 0, 'R');
 
-            $pdf->SetXY( 60, 47 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 15, 8, 'DATE   : ', 0, 0, 'L');
-            $pdf->SetXY( 78, 47 ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 20, 8, $firstrow['dateandtime'], 0, 0, 'R');
+            $pdf->SetXY( 60, 49 ); $pdf->SetFont( "Arial", "", 10 ); $pdf->Cell( 15, 8, 'DATE   : ', 0, 0, 'L');
+            $pdf->SetXY( 78, 49 ); $pdf->SetFont( "Arial", "", 8 ); $pdf->Cell( 20, 8, $firstrow['dateandtime'], 0, 0, 'R');
 
-            $pdf->SetLineWidth(0.5); $pdf->Line(5, 55.5, 97, 55.5);
+            $pdf->SetLineWidth(0.5); $pdf->Line(5, 57.5, 97, 57.5);
             
-            $pdf->SetXY( 5, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 45, 8, 'ITEM NAME', 0, 0, 'L');
-            $pdf->SetXY( 52, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 10, 8, 'QTY', 0, 0, 'C');
-            $pdf->SetXY( 65, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 12, 8, 'MRP', 0, 0, 'R');
-            $pdf->SetXY( 80, 54.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 15, 8, 'TOTAL', 0, 0, 'R');
+            $pdf->SetXY( 5, 56.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 45, 8, 'ITEM NAME', 0, 0, 'L');
+            $pdf->SetXY( 52, 56.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 10, 8, 'QTY', 0, 0, 'C');
+            $pdf->SetXY( 65, 56.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 12, 8, 'MRP', 0, 0, 'R');
+            $pdf->SetXY( 80, 56.5 ); $pdf->SetFont( "Arial", "B", 8 ); $pdf->Cell( 15, 8, 'TOTAL', 0, 0, 'R');
 
-            $pdf->SetLineWidth(0.5); $pdf->Line(5, 61, 97, 61);
+            $pdf->SetLineWidth(0.5); $pdf->Line(5, 63, 97, 63);
 
-            $y = 61;
+            $y = 63;
             $r = 1;
 
             foreach ($rows as $data)
