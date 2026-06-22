@@ -357,51 +357,26 @@ class AdminModel extends Database {
 
     public function clearTableByNumber($table) {
         try {
-            // Find all u_id associated with this table
-            $stmt = $this->conn->prepare("SELECT u_id FROM tbl_user WHERE table_no = :tab");
+            // 1. Archive all existing orders for this table
+            $stmt = $this->conn->prepare("UPDATE tbl_orders SET ostatus = 'ARCHIVED' WHERE u_id IN (SELECT u_id FROM tbl_user WHERE table_no = :tab)");
             $stmt->bindParam(":tab", $table);
             $stmt->execute();
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $uid = $row['u_id'];
-                $upd = $this->conn->prepare("UPDATE tbl_orders SET ostatus = 'ARCHIVED' WHERE u_id = :uid");
-                $upd->bindParam(":uid", $uid);
-                $upd->execute();
-            }
+            
+            // 2. Delete any user sessions for this table that have ZERO orders (these cause 'occupied' ghosts)
+            $stmt2 = $this->conn->prepare("DELETE FROM tbl_user WHERE table_no = :tab AND u_id NOT IN (SELECT u_id FROM tbl_orders)");
+            $stmt2->bindParam(":tab", $table);
+            $stmt2->execute();
+            
             return true;
         } catch(PDOException $e) {
             error_log($e->getMessage());
             return false;
-            return [];
         }
     }
 
     public function forceUnlockTable($tableno) {
-        try {
-            $stmt = $this->conn->prepare("SELECT u_id FROM tbl_user WHERE table_no=:ids");
-            $stmt->bindParam(":ids", $tableno);
-            $stmt->execute();
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if(count($rows) > 0) {
-                foreach ($rows as $row) {
-                    $uid = $row['u_id'];
-                    
-                    $dummyId = md5(uniqid());
-                    $ins = $this->conn->prepare("INSERT INTO tbl_orders (order_id, u_id, item_id, o_qty, ostatus) VALUES (:oid, :uid, 'dummy', 0, 'ARCHIVED')");
-                    $ins->bindParam(":oid", $dummyId);
-                    $ins->bindParam(":uid", $uid);
-                    $ins->execute();
-
-                    $upd = $this->conn->prepare("UPDATE tbl_orders SET ostatus = 'ARCHIVED' WHERE u_id = :uid");
-                    $upd->bindParam(":uid", $uid);
-                    $upd->execute();
-                }
-                return true;
-            }
-            return false;
-        } catch(PDOException $e) {
-            error_log($e->getMessage());
-            return false;
-        }
+        // Force unlock does the exact same thing: clears ghost sessions and archives active orders
+        return $this->clearTableByNumber($tableno);
     }
 
     public function isUserCleared($u_id) {
