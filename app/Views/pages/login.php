@@ -9,7 +9,7 @@
             </div>
             <div class="form-group text-left mt-3">
                 <label>Enter Table Number</label>
-                <input type="number" name="tableno" class="form-control" placeholder="Table No." required>
+                <input type="number" name="tableno" class="form-control" placeholder="Table No. (1-20)" min="1" max="20" required>
             </div>
             <div class="mt-4">
                 <button type="submit" name="submit" class="btn btn-primary btn-block w-100">Login to Order</button>

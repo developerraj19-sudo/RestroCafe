@@ -12,8 +12,14 @@ class AuthController extends BaseController {
     public function login() {
         if (isset($_POST['submit'])) {
             $username = trim($_POST['username']);
-            $tableno = trim($_POST['tableno']);
+            $tableno = (int)trim($_POST['tableno']);
             
+            if ($tableno < 1 || $tableno > 20) {
+                $_SESSION['error_message'] = "Invalid Table Number. Please enter a table between 1 and 20.";
+                $this->redirect('/');
+                return;
+            }
+
             $admin = new AdminModel();
             
             // Check if same user is at table
