@@ -74,6 +74,17 @@ class AdminModel extends Database {
         }
     }
 
+    public function getOccupiedTables() {
+        $occupied = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $uname = $this->checkTableOccupied($i);
+            if ($uname) {
+                $occupied[$i] = $uname;
+            }
+        }
+        return $occupied;
+    }
+
     public function getitemlist() {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM tbl_items WHERE 1=1");
