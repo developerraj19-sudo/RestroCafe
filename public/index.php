@@ -69,5 +69,17 @@ if (!$url) {
     }
 }
 
-$router = new Router();
-$router->dispatch($url ?? 'home/index');
+try {
+    $router = new Router();
+    $router->dispatch($url ?? 'home/index');
+} catch (\Throwable $e) {
+    http_response_code(500);
+    echo "<div style='padding: 20px; font-family: monospace; background: #fff; color: #000;'>";
+    echo "<h1>CRITICAL FATAL ERROR</h1>";
+    echo "<p><strong>Message:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<p><strong>File:</strong> " . htmlspecialchars($e->getFile()) . "</p>";
+    echo "<p><strong>Line:</strong> " . $e->getLine() . "</p>";
+    echo "<h3>Stack Trace:</h3>";
+    echo "<pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    echo "</div>";
+}
