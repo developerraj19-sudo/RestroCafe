@@ -213,7 +213,7 @@
                 <div class="card-body">
                     <p class="text-light" style="font-size: 0.9rem;">If a table is permanently stuck because a customer logged in but never ordered, you can forcefully unlock it here.</p>
                     <form action="<?php echo BASE_URL; ?>/admin/forceUnlock" method="POST" class="form-inline">
-                        <input type="number" name="table_no" class="form-control mr-3" placeholder="Table No. (1-20)" min="1" max="20" required style="background-color: var(--bg-light); color: var(--text-light); border: 1px solid var(--glass-border);">
+                        <input type="number" name="table_no" class="form-control mr-3" placeholder="Table No. (1-20)" min="1" max="20" required style="width: 150px; background-color: var(--bg-light); color: var(--text-light); border: 1px solid var(--glass-border);">
                         <button type="submit" class="btn btn-warning" onclick="return confirm('Are you sure you want to force unlock this table? This will clear any active session on it.')">Force Unlock</button>
                     </form>
                 </div>
